@@ -1,0 +1,1 @@
+We built Pip AI Room to solve a problem you already have: three AI chatbots that have never spoken. Gemini, ChatGPT and Claude now scope, collect, challenge and conclude together while you watch. No server, no API keys.

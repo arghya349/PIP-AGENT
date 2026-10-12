@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "harness",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8790",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "/Users/arghyabhattacharjee/agent pip"
+      ],
+      "port": 8790
+    }
+  ]
+}

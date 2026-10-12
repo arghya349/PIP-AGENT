@@ -1,0 +1,13 @@
+{
+  "name": "agent-pip",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pip AI Room: Gemini, ChatGPT and Claude research together, as one Chrome extension.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "check": "node scripts/check.mjs",
+    "zip": "node scripts/check.mjs && node scripts/zip.mjs"
+  },
+  "engines": { "node": ">=20" }
+}

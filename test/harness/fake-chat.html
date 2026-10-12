@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>fake chat</title></head>
+<body>
+<script src="child-chrome.js"></script>
+<script src="fake-chat.js"></script>
+<!-- the extension's content scripts, in manifest order -->
+<script src="/src/pip/engine.js"></script>
+<script src="/src/pip/dock.js"></script>
+<script src="/src/content/sites.js"></script>
+<script>PipSites[location.hostname] = PipSites[new URLSearchParams(location.search).get("site")];</script>
+<script src="/src/content/driver.js"></script>
+<script src="/src/content/agent.js"></script>
+</body>
+</html>

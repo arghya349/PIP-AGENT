@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Pip AI Room · harness</title>
+<style>
+  html, body { margin: 0; height: 100%; font: 12px system-ui; background: #ddd; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 4px; height: 100vh; }
+  iframe { width: 100%; height: 100%; border: 3px solid transparent; background: #fff; box-sizing: border-box; }
+  iframe.front { border-color: #e6a0ac; }
+</style>
+</head>
+<body>
+<div class="grid" id="grid"></div>
+<!-- 1. fake chrome.* for the background, 2. the real background, 3. the room page and three fake chats -->
+<script src="chrome-hub.js"></script>
+<script type="module">
+  await import("/src/background.js");
+  const hub = globalThis.__pipHub;
+  const grid = document.getElementById("grid");
+  const frames = {};
+  const add = (id, src) => { const f = document.createElement("iframe"); f.id = id; f.src = src; grid.append(f); frames[id] = f; return f; };
+  // the room page, with the fake chrome injected before its own scripts
+  const html = await (await fetch("/src/room/room.html")).text();
+  const room = document.createElement("iframe");
+  room.id = "room";
+  room.srcdoc = html.replace("<head>", '<head><base href="/src/room/"><script src="/test/harness/child-chrome.js"><\/script>');
+  grid.append(room);
+  frames.room = room;
+  const sites = [["gemini.google.com", 11], ["chatgpt.com", 12], ["claude.ai", 13]];
+  for (const [site, tab] of sites) add(site, `fake-chat.html?site=${site}&tab=${tab}&url=${encodeURIComponent(`https://${site}/app/harness`)}`);
+  hub.onFront = (tabId) => { for (const [site, tab] of sites) frames[site].classList.toggle("front", tab === tabId); };
+  window.frames_ = frames;
+</script>
+</body>
+</html>
